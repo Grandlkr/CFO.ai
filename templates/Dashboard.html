@@ -1,0 +1,289 @@
+<!-- Dashboard -->
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bookkeeper Pro - Mobile Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px border-outline-variant;
+        }
+        .balance-gradient {
+            background: linear-gradient(135deg, #091426 0%, #1e293b 100%);
+        }
+        /* Custom thin scrollbar for horizontal lists */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#e4e2e3",
+                    "on-tertiary-fixed": "#002113",
+                    "outline": "#75777d",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-secondary-container": "#57657a",
+                    "primary-container": "#1e293b",
+                    "on-secondary-fixed-variant": "#3a485b",
+                    "surface-variant": "#e4e2e3",
+                    "surface-container-low": "#f5f3f4",
+                    "primary": "#091426",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#b9c7df",
+                    "surface-container": "#f0edef",
+                    "secondary-fixed": "#d5e3fc",
+                    "surface-container-high": "#eae7e9",
+                    "primary-fixed": "#d8e3fb",
+                    "outline-variant": "#c5c6cd",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "background": "#fbf8fa",
+                    "inverse-on-surface": "#f3f0f2",
+                    "surface-tint": "#545f73",
+                    "inverse-primary": "#bcc7de",
+                    "inverse-surface": "#303032",
+                    "on-secondary-fixed": "#0d1c2e",
+                    "tertiary-container": "#00301e",
+                    "tertiary": "#00190e",
+                    "secondary-container": "#d5e3fc",
+                    "on-primary-fixed": "#111c2d",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-background": "#1b1b1d",
+                    "surface": "#fbf8fa",
+                    "on-surface-variant": "#45474c",
+                    "surface-bright": "#fbf8fa",
+                    "on-surface": "#1b1b1d",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "secondary": "#515f74",
+                    "primary-fixed-dim": "#bcc7de",
+                    "on-primary-container": "#8590a6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-container": "#00a472",
+                    "error": "#ba1a1a",
+                    "surface-dim": "#dcd9db",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#3c475a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "stack-md": "16px",
+                    "container-max-width": "1280px",
+                    "margin-desktop": "40px"
+            },
+            "fontFamily": {
+                    "mono-data": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "title-lg": ["18px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky bg-background border-b border-outline-variant z-50">
+<div class="flex justify-between items-center px-margin-mobile py-stack-sm w-full mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A clean, professional headshot of a small business owner in a modern studio setting. The lighting is soft and natural, emphasizing trust and competence. The background is a minimalist office with muted grey and white tones, matching the sleek aesthetic of a high-end bookkeeping application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt7gfY6fBPL51NpXx3cEHLLpLbad8pukuLs_DiugwoEqXpio3ZCWqzepAAHTGgmBYqH-S2Z8ZuX8KsevAR3Yu5iAtokvjXXtNnfFAe2Fr1_7oIQHORDq9fnGzNAe-8va46D7X5JGzpAUXyN5PhkluvslkLYCukpaO4cgCuYfayVQucn2ZzQi-5w70LNJZSng6i6IohVG_INQmXoMW70lKdYUDdzzEh0qKIBbV8yNpKzo7nM79suSWxE8pAtR07z68R2AqKUHNuFKuh"/>
+</div>
+<span class="font-headline-md text-headline-md text-primary">Bookkeeper Pro</span>
+</div>
+<div class="p-2 transition-colors duration-200 hover:bg-surface-container-low rounded-full">
+<span class="material-symbols-outlined text-primary">settings</span>
+</div>
+</div>
+</header>
+<main class="px-margin-mobile space-y-stack-lg mt-stack-md">
+<!-- Welcome Section -->
+<section>
+<p class="font-body-md text-body-md text-on-surface-variant">Welcome back, Sarah</p>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Daily Overview</h1>
+</section>
+<!-- Current Balance Card -->
+<section class="balance-gradient rounded-xl p-gutter text-white shadow-sm relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-stack-sm">
+<span class="font-label-md text-label-md uppercase tracking-widest text-primary-fixed-dim">Current Balance</span>
+<span class="material-symbols-outlined text-primary-fixed">account_balance_wallet</span>
+</div>
+<div class="font-display-lg text-display-lg mb-1">$42,850.12</div>
+<div class="flex items-center gap-1.5 font-label-md text-label-md">
+<span class="flex items-center text-tertiary-fixed-dim">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                        +2.4%
+                    </span>
+<span class="text-on-primary-container">from last month</span>
+</div>
+</div>
+<!-- Subtle abstract background effect -->
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-white/5 rounded-full blur-3xl"></div>
+</section>
+<!-- This Month Summary (Income vs Expenses) -->
+<section class="space-y-stack-md">
+<div class="flex justify-between items-end">
+<h2 class="font-title-lg text-title-lg text-primary">This Month</h2>
+<button class="font-label-md text-label-md text-secondary hover:underline">View details</button>
+</div>
+<div class="grid grid-cols-2 gap-stack-md">
+<!-- Income Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md">
+<div class="flex items-center gap-2 mb-stack-sm">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant text-base">arrow_downward</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">Income</span>
+</div>
+<div class="font-headline-md text-headline-md text-primary">$12,400</div>
+<div class="mt-stack-sm h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-on-tertiary-container w-[75%]"></div>
+</div>
+</div>
+<!-- Expenses Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md">
+<div class="flex items-center gap-2 mb-stack-sm">
+<div class="w-8 h-8 rounded-full bg-error-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-base">arrow_upward</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">Expenses</span>
+</div>
+<div class="font-headline-md text-headline-md text-primary">$8,120</div>
+<div class="mt-stack-sm h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error w-[48%]"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Alert Section: Low Stock -->
+<section class="space-y-stack-md">
+<div class="flex items-center gap-2 text-error">
+<span class="material-symbols-outlined">warning</span>
+<h2 class="font-title-lg text-title-lg">Low Stock Alerts</h2>
+</div>
+<div class="space-y-stack-sm">
+<!-- Inventory Item 1 -->
+<div class="flex items-center justify-between p-stack-md bg-surface-container-lowest border border-outline-variant rounded-xl">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional product photo of premium artisanal roasted coffee beans in a sleek, matte black package. The shot is high-key with soft shadows, highlighting the texture of the packaging against a clean white marble countertop. The minimalist vibe aligns with a modern business aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPIi2PrJGymGEnn51KDH9xB2loOxRWzX8SQZzwg-qV_t_XiSR2BJtZKGMdvraB8AY2UEy-ToAGXc_AiLX4xxMwwFtZibGs2TLbzbqcz_KgX7oTXm_3wJ4tbVPwsdDLV5ZIVQ9hpM-_5qh4YfQmuTi5o1bohRA4f5GLQKRD9pSnc8vzRJbambSBIWPJ3IbmPXW5S1Q-C3ifh_ZydsMyrzetyEBwS7xjfuxvxc8jT1UMPV7gf_FlV0jFr3zJgQjYEG4xmZXGhXCEBbPB"/>
+</div>
+<div>
+<div class="font-body-lg text-body-lg text-primary">Artisan Blend (250g)</div>
+<div class="font-label-md text-label-md text-error">Only 4 units left</div>
+</div>
+</div>
+<button class="px-4 py-2 bg-primary text-white text-label-md font-label-md rounded-lg">Restock</button>
+</div>
+<!-- Inventory Item 2 -->
+<div class="flex items-center justify-between p-stack-md bg-surface-container-lowest border border-outline-variant rounded-xl">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up of high-quality organic loose leaf tea leaves in a transparent glass jar. The setting is bright and airy with a professional, minimalist studio feel. Shallow depth of field focuses on the intricate textures of the tea leaves, using a soft palette of greens and earthy tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKCb941ybu3xs8NwSBiYIq9G_nRUIV3dY_fCsxutwCWtlSVlMmTRuQpk5_UVZh1NzE9u5o7v80uC-WvU-TsuPOArAnsV7aZAFujs_XpNuiEqFBga2Glbxw8Uf6m0D_ySgjO-d0qqdfs3WZWI0RA7uMCs5HxJud0XIe6HdCP0BTONyIYRqZgLHhUvLTSuNFc6vcWRPixx3vtmqBM34uTm5l9sW3dmS2ieGHPnsHhH-Tobk6oeP10U_VLmRqjIwlRpZ357THUpE--McI"/>
+</div>
+<div>
+<div class="font-body-lg text-body-lg text-primary">Green Tea Supreme</div>
+<div class="font-label-md text-label-md text-error">Only 2 units left</div>
+</div>
+</div>
+<button class="px-4 py-2 bg-primary text-white text-label-md font-label-md rounded-lg">Restock</button>
+</div>
+</div>
+</section>
+<!-- AI Insights Bento Preview -->
+<section class="bg-surface-container-low p-stack-md rounded-2xl border border-outline-variant/30">
+<div class="flex items-center gap-2 mb-stack-sm">
+<span class="material-symbols-outlined text-primary">smart_toy</span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-secondary">AI Insight</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">Your tax liability for Q3 is estimated to be $3,400. We recommend setting aside $400/week to be fully prepared.</p>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant z-50 flex justify-around items-center px-4 py-2 shadow-sm">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-95 transition-transform duration-150" href="/">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors duration-200" href="/transactions">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-label-md">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors duration-200" href="/chat">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">AI Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors duration-200" href="/inventory">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Stock</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors duration-200" href="/reports">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.bg-surface-container-lowest').forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease';
+            });
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

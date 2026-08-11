@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bookkeeper Pro - Authentication</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#3a485b",
+                        "surface-container-highest": "#e4e2e3",
+                        "secondary": "#515f74",
+                        "on-surface-variant": "#45474c",
+                        "on-secondary": "#ffffff",
+                        "background": "#fbf8fa",
+                        "surface-dim": "#dcd9db",
+                        "secondary-fixed-dim": "#b9c7df",
+                        "surface-bright": "#fbf8fa",
+                        "primary": "#091426",
+                        "on-error-container": "#93000a",
+                        "outline": "#75777d",
+                        "primary-container": "#1e293b",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "surface-variant": "#e4e2e3",
+                        "surface": "#fbf8fa",
+                        "secondary-container": "#d5e3fc",
+                        "surface-container-high": "#eae7e9",
+                        "on-background": "#1b1b1d",
+                        "surface-container-low": "#f5f3f4",
+                        "primary-fixed-dim": "#bcc7de",
+                        "on-secondary-container": "#57657a",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#303032",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "primary-fixed": "#d8e3fb",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "on-error": "#ffffff",
+                        "tertiary": "#00190e",
+                        "on-primary-container": "#8590a6",
+                        "tertiary-container": "#00301e",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#111c2d",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-tint": "#545f73",
+                        "surface-container": "#f0edef",
+                        "inverse-primary": "#bcc7de",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c5c6cd",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#f3f0f2",
+                        "secondary-fixed": "#d5e3fc",
+                        "on-tertiary-container": "#00a472",
+                        "on-surface": "#1b1b1d",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-tertiary-fixed": "#002113",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "unit": "8px",
+                        "stack-lg": "32px",
+                        "container-max-width": "1280px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "mono-data": ["Inter"],
+                        "label-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "title-lg": ["18px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fbf8fa;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tab-active {
+            border-bottom: 2px solid #091426;
+            color: #091426;
+        }
+        .tab-inactive {
+            color: #45474c;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="flex flex-col min-h-screen">
+<!-- Auth Hero Section -->
+<main class="flex-grow flex items-center justify-center px-margin-mobile md:px-margin-desktop py-stack-lg relative overflow-hidden">
+<!-- Subtle Ambient Background Element -->
+<div class="absolute inset-0 z-0 opacity-40 pointer-events-none">
+<div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-secondary-container rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-primary-fixed rounded-full blur-[100px]"></div>
+</div>
+<div class="w-full max-w-md z-10">
+<!-- Brand Logo -->
+<div class="flex flex-col items-center mb-stack-lg text-center">
+<div class="bg-primary text-on-primary w-12 h-12 flex items-center justify-center rounded-xl mb-4 shadow-sm">
+<span class="material-symbols-outlined text-3xl">account_balance_wallet</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Bookkeeper Pro</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Fiscal precision for your business journey.</p>
+</div>
+<!-- Auth Card -->
+<div class="glass-panel rounded-xl shadow-sm p-8 bg-surface-container-lowest">
+<!-- Tab Toggle -->
+<div class="flex border-b border-outline-variant mb-stack-lg">
+<button class="flex-1 py-3 font-title-lg text-title-lg transition-all duration-200 tab-active" id="loginTab" onclick="switchTab('login')">
+                        Login
+                    </button>
+<button class="flex-1 py-3 font-title-lg text-title-lg transition-all duration-200 tab-inactive" id="signupTab" onclick="switchTab('signup')">
+                        Sign Up
+                    </button>
+</div>
+<!-- Login Form -->
+<form class="space-y-stack-md" id="loginForm">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant" for="login-email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">mail</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all font-body-md text-body-md text-on-surface outline-none" id="login-email" placeholder="name@company.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface-variant" for="login-password">Password</label>
+<a class="text-xs font-medium text-primary hover:underline" href="#">Forgot password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">lock</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all font-body-md text-body-md text-on-surface outline-none" id="login-password" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<p class="hidden font-body-md text-body-md" id="login-message" role="alert"></p>
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-title-lg text-title-lg hover:bg-primary-container transition-colors shadow-md mt-4 flex items-center justify-center gap-2 group" type="submit">
+                        Login
+                        <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</form>
+<!-- Sign Up Form (Hidden by Default) -->
+<form class="hidden space-y-stack-md" id="signupForm">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant" for="signup-name">Full Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">person</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all font-body-md text-body-md text-on-surface outline-none" id="signup-name" placeholder="John Doe" type="text"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant" for="signup-email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">mail</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all font-body-md text-body-md text-on-surface outline-none" id="signup-email" placeholder="name@company.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant" for="signup-password">Password</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">lock</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all font-body-md text-body-md text-on-surface outline-none" id="signup-password" placeholder="Create a strong password" type="password"/>
+</div>
+</div>
+<p class="hidden font-body-md text-body-md" id="signup-message" role="alert"></p>
+<p class="text-[11px] text-on-surface-variant leading-tight">
+                        By creating an account, you agree to our <a class="text-primary hover:underline font-medium" href="#">Terms of Service</a> and <a class="text-primary hover:underline font-medium" href="#">Privacy Policy</a>.
+                    </p>
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-title-lg text-title-lg hover:bg-primary-container transition-colors shadow-md mt-2 flex items-center justify-center gap-2 group" type="submit">
+                        Create Account
+                        <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">person_add</span>
+</button>
+</form>
+<!-- Social Auth Separator -->
+<div class="mt-8 flex items-center gap-4">
+<div class="h-px flex-grow bg-outline-variant"></div>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Or continue with</span>
+<div class="h-px flex-grow bg-outline-variant"></div>
+</div>
+<div class="mt-6 grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors font-body-md text-body-md">
+<img alt="Google" class="w-4 h-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3HPx96PXVvOfZGskTgajvevi_-SgnRodwCCWIDryyf9ZggwhCc719GONBZ04tnOhw57r-Z-4HVwhWEDmasupn_30Kic8RzoDaZGb4WRlRtKNq6IANDr-TEsfj50Wxu6aUUqp9revDEofOIJKmtYE8mJREqkPRrE9uR6r1GVSKqOAv2fRi3tpIzKTfBjssudSVPudHuVHXMzCLE26aJJwOzPlgXoYx8x1XLMjqHwEUHaWqG2eFp_PRZg"/>
+                        Google
+                    </button>
+<button class="flex items-center justify-center gap-2 px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors font-body-md text-body-md">
+<img alt="Apple" class="w-4 h-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBivZhgUJRZK757dyRpTizyQq8VNdCGbD7IiQjaS4ator6W9BdUekBbhA7a57I4syNeXZbW9IJzc3f6GXjoXSclP34VCxrKTvqXaQah_mq917PKd86v3MxWj18f7QkyYbW64UUcwCRy0_xDnvi_G3loOrhR_pUi1-qXebhgKCSU_720v4MI5-yRSFE1pK0CFYKBY-JXX98FEus9NNlzQIl3z8T4owOhkyESQJGrS9RMORr-AIEbxtJr4g"/>
+                        Apple
+                    </button>
+</div>
+</div>
+<!-- Trust Badges / Footer Info -->
+<div class="mt-stack-lg grid grid-cols-3 gap-stack-md opacity-70 grayscale">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-primary mb-1">security</span>
+<span class="text-[10px] font-medium text-on-surface-variant uppercase tracking-tighter">Bank-Level Security</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-primary mb-1">verified_user</span>
+<span class="text-[10px] font-medium text-on-surface-variant uppercase tracking-tighter">SIPC Protected</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-primary mb-1">sync</span>
+<span class="text-[10px] font-medium text-on-surface-variant uppercase tracking-tighter">Real-time Audit</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Support Link Footer -->
+<footer class="py-stack-md text-center">
+<p class="font-label-md text-label-md text-on-surface-variant">
+            Need help? <a class="text-primary hover:underline font-semibold" href="#">Contact our specialist support</a>
+</p>
+</footer>
+<script>
+        function switchTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const loginTab = document.getElementById('loginTab');
+            const signupTab = document.getElementById('signupTab');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                loginTab.classList.add('tab-active');
+                loginTab.classList.remove('tab-inactive');
+                signupTab.classList.remove('tab-active');
+                signupTab.classList.add('tab-inactive');
+            } else {
+                loginForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+                loginTab.classList.remove('tab-active');
+                loginTab.classList.add('tab-inactive');
+                signupTab.classList.add('tab-active');
+                signupTab.classList.remove('tab-inactive');
+            }
+        }
+
+        // Micro-interaction for input fields
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('scale-[1.01]');
+                input.parentElement.style.transition = 'transform 0.2s ease-out';
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('scale-[1.01]');
+            });
+        });
+    </script>
+<script src="/static/auth.js"></script>
+</body></html>

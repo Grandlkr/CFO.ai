@@ -1,0 +1,361 @@
+<!-- Inventory -->
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bookkeeper Pro - Inventory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#e4e2e3",
+                    "on-tertiary-fixed": "#002113",
+                    "outline": "#75777d",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-secondary-container": "#57657a",
+                    "primary-container": "#1e293b",
+                    "on-secondary-fixed-variant": "#3a485b",
+                    "surface-variant": "#e4e2e3",
+                    "surface-container-low": "#f5f3f4",
+                    "primary": "#091426",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#b9c7df",
+                    "surface-container": "#f0edef",
+                    "secondary-fixed": "#d5e3fc",
+                    "surface-container-high": "#eae7e9",
+                    "primary-fixed": "#d8e3fb",
+                    "outline-variant": "#c5c6cd",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "background": "#fbf8fa",
+                    "inverse-on-surface": "#f3f0f2",
+                    "surface-tint": "#545f73",
+                    "inverse-primary": "#bcc7de",
+                    "inverse-surface": "#303032",
+                    "on-secondary-fixed": "#0d1c2e",
+                    "tertiary-container": "#00301e",
+                    "tertiary": "#00190e",
+                    "secondary-container": "#d5e3fc",
+                    "on-primary-fixed": "#111c2d",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-background": "#1b1b1d",
+                    "surface": "#fbf8fa",
+                    "on-surface-variant": "#45474c",
+                    "surface-bright": "#fbf8fa",
+                    "on-surface": "#1b1b1d",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "secondary": "#515f74",
+                    "primary-fixed-dim": "#bcc7de",
+                    "on-primary-container": "#8590a6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-container": "#00a472",
+                    "error": "#ba1a1a",
+                    "surface-dim": "#dcd9db",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#3c475a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "stack-md": "16px",
+                    "container-max-width": "1280px",
+                    "margin-desktop": "40px"
+            },
+            "fontFamily": {
+                    "mono-data": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "title-lg": ["18px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-overlay { backdrop-filter: blur(8px); background-color: rgba(255, 255, 255, 0.8); }
+        .active-tab-shadow { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        input:focus { outline: none; border-color: #091426 !important; box-shadow: 0 0 0 2px rgba(9, 20, 38, 0.1); }
+    </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- Top AppBar (JSON Driven) -->
+<header class="w-full top-0 sticky bg-background border-b border-outline-variant z-40">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-sm w-full max-w-container-max-width mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a small business owner in a modern, brightly lit office environment. The person is smiling confidently, wearing professional attire. The background is softly blurred with minimalist office decor and a hint of natural morning light. The overall aesthetic is clean, light-toned, and reliable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoCZWadSgjQh4raZNsdC-1BR7KDFULvLJpwpec4ZoXghyjxY2ul9Q32llouTWNOs6v5jGNhUlQPH6L2KU_zTLDt1YLQfhgp_XDApTKfYnpJonatEGXBazXnSEBwozBHnaAPI1TXyRuFiRGJdk_fhH8cg1el-kFGRCKo8KoYW930nQD9X3RYAyUJnXn7TPqAgutXZG8nsA9uSIB8IpxXAjIS-arr54APv7Zk4mkauk-EQD8xWeA7rfOdNTgnxjCTIAgVg9RN1qa_LZu"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary">Inventory</h1>
+</div>
+<button class="bg-primary text-on-primary flex items-center gap-2 px-4 py-2 rounded-xl transition-colors hover:bg-primary-container" onclick="toggleForm()">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="font-label-md text-label-md">Add Item</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="px-margin-mobile pt-stack-md space-y-stack-md max-w-container-max-width mx-auto">
+<!-- Inventory Summary Stats -->
+<div class="grid grid-cols-2 gap-stack-md">
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-md rounded-xl">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Value</p>
+<p class="font-headline-md text-headline-md text-primary mt-1">$24,450.00</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-md rounded-xl">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Low Stock</p>
+<div class="flex items-center gap-2 mt-1">
+<p class="font-headline-md text-headline-md text-error">4 Items</p>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+</div>
+</div>
+<!-- Inventory List -->
+<section class="space-y-stack-sm">
+<!-- Item Card: Low Stock Example -->
+<div class="bg-surface-container-lowest border border-error-container p-stack-md rounded-xl transition-all hover:shadow-sm">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="font-title-lg text-title-lg text-primary">Ergonomic Office Chair</h3>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-full bg-error-container px-2 py-0.5 text-error font-label-md text-label-md">
+                                Low Stock
+                            </span>
+<span class="font-body-md text-body-md text-on-surface-variant">ID: #INV-001</span>
+</div>
+</div>
+<div class="text-right">
+<p class="font-mono-data text-mono-data text-primary">QTY: 03</p>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant grid grid-cols-2">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Cost Price</p>
+<p class="font-body-lg text-body-lg text-primary">$145.00</p>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-surface-variant">Sell Price</p>
+<p class="font-body-lg text-body-lg text-primary">$299.00</p>
+</div>
+</div>
+</div>
+<!-- Item Card: Regular Stock -->
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-md rounded-xl transition-all hover:shadow-sm">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="font-title-lg text-title-lg text-primary">Wireless Mechanical Keyboard</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">ID: #INV-002</p>
+</div>
+<div class="text-right">
+<p class="font-mono-data text-mono-data text-primary">QTY: 24</p>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant grid grid-cols-2">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Cost Price</p>
+<p class="font-body-lg text-body-lg text-primary">$65.00</p>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-surface-variant">Sell Price</p>
+<p class="font-body-lg text-body-lg text-primary">$120.00</p>
+</div>
+</div>
+</div>
+<!-- Item Card: Regular Stock -->
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-md rounded-xl transition-all hover:shadow-sm">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="font-title-lg text-title-lg text-primary">4K Monitor 27"</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">ID: #INV-003</p>
+</div>
+<div class="text-right">
+<p class="font-mono-data text-mono-data text-primary">QTY: 12</p>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant grid grid-cols-2">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Cost Price</p>
+<p class="font-body-lg text-body-lg text-primary">$210.00</p>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-surface-variant">Sell Price</p>
+<p class="font-body-lg text-body-lg text-primary">$450.00</p>
+</div>
+</div>
+</div>
+<!-- Item Card: Low Stock Example -->
+<div class="bg-surface-container-lowest border border-error-container p-stack-md rounded-xl transition-all hover:shadow-sm">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="font-title-lg text-title-lg text-primary">Thunderbolt 4 Dock</h3>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-full bg-error-container px-2 py-0.5 text-error font-label-md text-label-md">
+                                Low Stock
+                            </span>
+<span class="font-body-md text-body-md text-on-surface-variant">ID: #INV-004</span>
+</div>
+</div>
+<div class="text-right">
+<p class="font-mono-data text-mono-data text-primary">QTY: 02</p>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant grid grid-cols-2">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Cost Price</p>
+<p class="font-body-lg text-body-lg text-primary">$180.00</p>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-surface-variant">Sell Price</p>
+<p class="font-body-lg text-body-lg text-primary">$349.00</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Slide-up Add Item Form Overlay -->
+<div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 transition-opacity duration-300 opacity-0 pointer-events-none" id="form-overlay">
+<div class="absolute bottom-0 left-0 w-full bg-background rounded-t-[2rem] p-margin-mobile transform translate-y-full transition-transform duration-300 ease-out shadow-lg" id="form-container">
+<div class="w-12 h-1.5 bg-outline-variant rounded-full mx-auto mb-6"></div>
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-md text-headline-md text-primary">Add New Item</h2>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-high transition-colors" onclick="toggleForm()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<form class="space-y-stack-md">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">ITEM NAME</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-4 font-body-lg text-body-lg focus:ring-0" placeholder="e.g. Ergonomic Office Chair" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-gutter">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">QUANTITY</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-4 font-mono-data text-mono-data focus:ring-0" type="number" value="0"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">UNIT</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-4 font-body-lg text-body-lg focus:ring-0 appearance-none">
+<option>pcs</option>
+<option>kg</option>
+<option>units</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-gutter">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">COST PRICE</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-4 pl-8 font-mono-data text-mono-data focus:ring-0" placeholder="0.00" type="number"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">SELL PRICE</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-4 pl-8 font-mono-data text-mono-data focus:ring-0" placeholder="0.00" type="number"/>
+</div>
+</div>
+</div>
+<div class="pt-4 flex gap-stack-md">
+<button class="flex-1 py-4 rounded-xl font-title-lg text-title-lg bg-surface-container-low text-primary hover:bg-surface-container-high transition-colors" onclick="toggleForm()" type="button">
+                        Cancel
+                    </button>
+<button class="flex-[2] py-4 rounded-xl font-title-lg text-title-lg bg-primary text-on-primary hover:bg-primary-container transition-all active:scale-95 shadow-md" type="submit">
+                        Save Item
+                    </button>
+</div>
+</form>
+<!-- Spacer for bottom nav clearance when form is up -->
+<div class="h-8"></div>
+</div>
+</div>
+<!-- Bottom Navigation Bar (JSON Driven) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface-container-lowest border-t border-outline-variant shadow-sm z-40">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-transform active:scale-95 duration-150" href="/">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-transform active:scale-95 duration-150" href="/transactions">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-label-md mt-1">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-transform active:scale-95 duration-150" href="/chat">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md mt-1">AI Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active-tab-shadow transition-transform active:scale-95 duration-150" href="/inventory">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label-md text-label-md">Stock</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-transform active:scale-95 duration-150" href="/reports">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-md text-label-md mt-1">Reports</span>
+</a>
+</nav>
+<script>
+        function toggleForm() {
+            const overlay = document.getElementById('form-overlay');
+            const container = document.getElementById('form-container');
+            
+            if (overlay.classList.contains('pointer-events-none')) {
+                overlay.classList.remove('pointer-events-none', 'opacity-0');
+                container.classList.remove('translate-y-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                overlay.classList.add('opacity-0');
+                container.classList.add('translate-y-full');
+                setTimeout(() => {
+                    overlay.classList.add('pointer-events-none');
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+        }
+
+        // Close on background click
+        document.getElementById('form-overlay').addEventListener('click', function(e) {
+            if (e.target === this) toggleForm();
+        });
+
+        // Prevention of form refresh for demo
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            toggleForm();
+        });
+    </script>
+</body></html>

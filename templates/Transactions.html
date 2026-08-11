@@ -1,0 +1,371 @@
+<!-- Transactions -->
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bookkeeper Pro - Transactions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#e4e2e3",
+                    "on-tertiary-fixed": "#002113",
+                    "outline": "#75777d",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-secondary-container": "#57657a",
+                    "primary-container": "#1e293b",
+                    "on-secondary-fixed-variant": "#3a485b",
+                    "surface-variant": "#e4e2e3",
+                    "surface-container-low": "#f5f3f4",
+                    "primary": "#091426",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#b9c7df",
+                    "surface-container": "#f0edef",
+                    "secondary-fixed": "#d5e3fc",
+                    "surface-container-high": "#eae7e9",
+                    "primary-fixed": "#d8e3fb",
+                    "outline-variant": "#c5c6cd",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "background": "#fbf8fa",
+                    "inverse-on-surface": "#f3f0f2",
+                    "surface-tint": "#545f73",
+                    "inverse-primary": "#bcc7de",
+                    "inverse-surface": "#303032",
+                    "on-secondary-fixed": "#0d1c2e",
+                    "tertiary-container": "#00301e",
+                    "tertiary": "#00190e",
+                    "secondary-container": "#d5e3fc",
+                    "on-primary-fixed": "#111c2d",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-background": "#1b1b1d",
+                    "surface": "#fbf8fa",
+                    "on-surface-variant": "#45474c",
+                    "surface-bright": "#fbf8fa",
+                    "on-surface": "#1b1b1d",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "secondary": "#515f74",
+                    "primary-fixed-dim": "#bcc7de",
+                    "on-primary-container": "#8590a6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-container": "#00a472",
+                    "error": "#ba1a1a",
+                    "surface-dim": "#dcd9db",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#3c475a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "stack-md": "16px",
+                    "container-max-width": "1280px",
+                    "margin-desktop": "40px"
+            },
+            "fontFamily": {
+                    "mono-data": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "title-lg": ["18px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        .modal-overlay {
+            backdrop-filter: blur(8px);
+            background-color: rgba(9, 20, 38, 0.4);
+        }
+        .animate-slide-up {
+            animation: slideUp 0.3s ease-out forwards;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky bg-background border-b border-outline-variant z-40 transition-colors duration-200">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-sm w-full max-w-container-max-width mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a smiling small business owner in a modern, brightly lit office environment. The lighting is soft and natural, emphasizing a trustworthy and efficient persona. The background is minimalist with soft blue and white tones, reflecting the Bookkeeper Pro brand identity of reliability and transparency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoVse_xeeROHuONz1C_PZn3mBM79q00_Q2-aS9wUMBrjjs6-_38IhcKsqZLW1GklX545NkIFBMaXNNoNGzJvpq-H-ywr96NSr2QQJo6Qq_31_3YA5D-kYM1L0ZBw82peCxQtGHNpIqZFjbjEJCm0owXtPswksO99OmovEZhWO0SNrrOn8Ga2ZM73Dh2pvPMw0OavITtwgxQW5wTqIz-hvCz30PgqnKdk9aSdTX4MMawHHB4meoPUbENh_FltcVGiQpRVJ7kc99Qi5R"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary">Transactions</h1>
+</div>
+<button class="bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center shadow-sm active:scale-90 transition-transform" id="openFormBtn">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop py-stack-md pb-24">
+<!-- Search & Filter Bar -->
+<div class="flex gap-stack-sm mb-stack-md overflow-x-auto no-scrollbar pb-2">
+<div class="bg-surface-container-low px-4 py-2 rounded-full flex items-center gap-2 border border-outline-variant/30 flex-shrink-0">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-24" placeholder="Search..." type="text"/>
+</div>
+<div class="bg-surface-container-lowest px-4 py-2 rounded-full border border-outline-variant flex items-center gap-1 flex-shrink-0">
+<span class="font-label-md text-label-md">All Time</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="expand_more">expand_more</span>
+</div>
+<div class="bg-surface-container-lowest px-4 py-2 rounded-full border border-outline-variant flex items-center gap-1 flex-shrink-0">
+<span class="font-label-md text-label-md">Category</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Transactions List -->
+<div class="space-y-stack-sm" id="transactionList">
+<!-- Date Header -->
+<div class="py-2">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Today, Oct 24</span>
+</div>
+<!-- Transaction Card 1 (Expense) -->
+<div class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm hover:border-primary/20 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-lg bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-primary">Office Lunch</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Team meeting catering</p>
+<span class="inline-block mt-1 px-2 py-0.5 rounded-full bg-surface-container-low font-label-md text-label-md text-on-secondary-container">Meals &amp; Ent.</span>
+</div>
+</div>
+<div class="text-right">
+<p class="font-headline-md text-headline-md text-error">-$45.20</p>
+<p class="font-label-md text-label-md text-on-surface-variant">12:30 PM</p>
+</div>
+</div>
+</div>
+<!-- Transaction Card 2 (Income) -->
+<div class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm hover:border-primary/20 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container/20 flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-primary">Invoice #2042</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Payment from Alpha Co.</p>
+<span class="inline-block mt-1 px-2 py-0.5 rounded-full bg-surface-container-low font-label-md text-label-md text-on-secondary-container">Sales</span>
+</div>
+</div>
+<div class="text-right">
+<p class="font-headline-md text-headline-md text-on-tertiary-container">+$1,250.00</p>
+<p class="font-label-md text-label-md text-on-surface-variant">09:15 AM</p>
+</div>
+</div>
+</div>
+<!-- Date Header -->
+<div class="py-4 mt-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Yesterday, Oct 23</span>
+</div>
+<!-- Transaction Card 3 (Expense) -->
+<div class="bg-surface-container-lowest p-stack-md rounded-xl border border-outline-variant shadow-sm hover:border-primary/20 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-lg bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined" data-icon="cloud">cloud</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-primary">AWS Subscription</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Monthly cloud hosting</p>
+<span class="inline-block mt-1 px-2 py-0.5 rounded-full bg-surface-container-low font-label-md text-label-md text-on-secondary-container">Software</span>
+</div>
+</div>
+<div class="text-right">
+<p class="font-headline-md text-headline-md text-error">-$120.00</p>
+<p class="font-label-md text-label-md text-on-surface-variant">11:00 PM</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State (Hidden by default) -->
+<div class="hidden flex flex-col items-center justify-center py-20 px-margin-mobile text-center" id="emptyState">
+<div class="w-24 h-24 mb-6 relative">
+
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-2">No transactions yet</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xs">Start your business journey by recording your first income or expense.</p>
+<button class="mt-8 px-8 py-3 bg-primary text-on-primary rounded-full font-title-lg shadow-md active:scale-95 transition-transform" onclick="document.getElementById('openFormBtn').click()">
+                Record First Entry
+            </button>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface-container-lowest border-t border-outline-variant shadow-sm z-40">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors duration-200" href="/">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-95 transition-transform duration-150" href="/transactions">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors duration-200" href="/chat">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-md text-label-md">AI Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors duration-200" href="/inventory">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-md text-label-md">Stock</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors duration-200" href="/reports">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+</nav>
+<!-- Transaction Form Overlay -->
+<div class="fixed inset-0 z-50 flex items-end justify-center invisible" id="formModal">
+<div class="absolute inset-0 modal-overlay opacity-0 transition-opacity duration-300" id="modalBackdrop"></div>
+<div class="relative w-full max-w-md bg-background rounded-t-[32px] p-8 shadow-2xl translate-y-full transition-transform duration-300 border-t border-outline-variant" id="formContainer">
+<div class="w-12 h-1 bg-outline-variant mx-auto mb-6 rounded-full"></div>
+<div class="flex justify-between items-center mb-8">
+<h2 class="font-headline-md text-headline-md text-primary">New Transaction</h2>
+<button class="text-on-surface-variant hover:text-primary transition-colors" id="closeFormBtn">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<form class="space-y-6">
+<!-- Toggle Switch -->
+<div class="bg-surface-container-low p-1 rounded-full flex gap-1 border border-outline-variant">
+<button class="flex-1 py-2 rounded-full font-title-lg bg-surface-container-lowest text-primary shadow-sm transition-all" id="toggleExpense" type="button">Expense</button>
+<button class="flex-1 py-2 rounded-full font-title-lg text-on-surface-variant hover:bg-surface-container-highest transition-all" id="toggleIncome" type="button">Income</button>
+</div>
+<!-- Amount Field -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">Amount</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-headline-md text-primary">$</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl pl-10 pr-4 py-4 text-headline-md font-mono-data focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none" placeholder="0.00" step="0.01" type="number"/>
+</div>
+</div>
+<!-- Category Dropdown -->
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">Category</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl px-4 py-3 text-body-lg focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none appearance-none">
+<option>Food &amp; Drink</option>
+<option>Software</option>
+<option>Marketing</option>
+<option>Utilities</option>
+<option>Sales</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">Date</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl px-4 py-3 text-body-lg focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none" type="date"/>
+</div>
+</div>
+<!-- Note Field -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">Note (Optional)</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl px-4 py-3 text-body-lg focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none h-24 resize-none" placeholder="What was this for?"></textarea>
+</div>
+<!-- Action Button -->
+<button class="w-full bg-primary text-on-primary font-title-lg py-4 rounded-xl shadow-lg active:scale-[0.98] transition-transform mt-4" type="submit">
+                    Save Transaction
+                </button>
+</form>
+</div>
+</div>
+<script>
+        const openFormBtn = document.getElementById('openFormBtn');
+        const closeFormBtn = document.getElementById('closeFormBtn');
+        const formModal = document.getElementById('formModal');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const formContainer = document.getElementById('formContainer');
+        const toggleExpense = document.getElementById('toggleExpense');
+        const toggleIncome = document.getElementById('toggleIncome');
+
+        function openModal() {
+            formModal.classList.remove('invisible');
+            modalBackdrop.classList.add('opacity-100');
+            formContainer.classList.remove('translate-y-full');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modalBackdrop.classList.remove('opacity-100');
+            formContainer.classList.add('translate-y-full');
+            setTimeout(() => {
+                formModal.classList.add('invisible');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        openFormBtn.addEventListener('click', openModal);
+        closeFormBtn.addEventListener('click', closeModal);
+        modalBackdrop.addEventListener('click', closeModal);
+
+        toggleExpense.addEventListener('click', () => {
+            toggleExpense.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+            toggleExpense.classList.remove('text-on-surface-variant', 'hover:bg-surface-container-highest');
+            toggleIncome.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+            toggleIncome.classList.add('text-on-surface-variant', 'hover:bg-surface-container-highest');
+        });
+
+        toggleIncome.addEventListener('click', () => {
+            toggleIncome.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+            toggleIncome.classList.remove('text-on-surface-variant', 'hover:bg-surface-container-highest');
+            toggleExpense.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+            toggleExpense.classList.add('text-on-surface-variant', 'hover:bg-surface-container-highest');
+        });
+
+        // Toggle Empty State for Demo
+        // Uncomment to see empty state
+        /*
+        document.getElementById('transactionList').classList.add('hidden');
+        document.getElementById('emptyState').classList.remove('hidden');
+        */
+    </script>
+</body></html>
